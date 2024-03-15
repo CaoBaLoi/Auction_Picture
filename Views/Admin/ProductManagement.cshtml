@@ -1,0 +1,80 @@
+@model Auction_Picture.Models.Product
+@{
+    ViewData["Title"] = "ProductManagement";
+    var products = ViewData["Products"] as List<Product>;
+}
+<h2>List of Products</h2>
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  New Product
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">New Product</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        @using (Html.BeginForm("AddProduct", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.LabelFor(m => m.Product_Name)
+                @Html.TextBoxFor(m => m.Product_Name, "", new { @class = "form-control", @placeholder = "Product Name" })
+                @Html.ValidationMessageFor(m => m.Product_Name, "", new { @class = "badge text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Info)
+                @Html.TextAreaFor(m => m.Info, new { @class = "form-control", @placeholder = "Description", rows = 3 })
+                @Html.ValidationMessageFor(m => m.Info, "", new { @class = "badge text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Starting_Price)
+                @Html.TextBoxFor(m => m.Starting_Price, "", new { @class = "form-control", @placeholder = "Price" })
+                @Html.ValidationMessageFor(m => m.Starting_Price, "", new { @class = "badge text-danger" })
+            </div>
+            <div class="form-group">
+                @Html.Label("ImageFile", "Upload Image")
+                <input type="file" id="ImageFile" name="ImageFile" class="form-control-file">
+            </div>
+            <div class="form-group">
+                <input type="submit" name="submit" class="btn btn-primary" value="Add Product"/>
+            </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Image</th>
+            <th>Info</th>
+            <th>Starting Price</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+      @if(products != null){
+        @foreach (var product in products)
+        {
+            <tr>
+                <td>@product.Product_Name</td>
+                <td><img src="..@product.Image_Url" alt="Product Image" style="max-width: 100px; max-height: 100px;"></td>
+                <td>@product.Info</td>
+                <td>@product.Starting_Price</td>
+                <td>
+                    <button type="button" class="btn btn-danger">
+                        <a href="@Url.Action("DelProduct", "Admin", new { id = product.Id_Product })">Delete</a>
+                    </button>
+                </td>
+            </tr>
+        }
+      }
+    </tbody>
+</table>

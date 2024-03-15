@@ -1,0 +1,30 @@
+@model Auction_Picture.Models.Account
+@{
+    ViewData["Title"] = "Forgot Password";
+}
+<div class="row justify-content-md-center">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-header">
+                Get OTP
+            </div>
+            <div class="card-body">
+                @using (Html.BeginForm("GetOTP", "Home", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Email)
+                        @Html.TextBoxFor(m => m.Email, "", new { @class = "form-control", @placeholder = "Enter your email" })
+                        @if (ViewBag.error != null)
+                        {
+                            <span class="badge text-danger">@ViewBag.error</span>
+                        }
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-primary" value="Get OTP"/>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

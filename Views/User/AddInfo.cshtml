@@ -1,0 +1,40 @@
+@model Auction_Picture.Models.User
+@{
+    ViewData["Title"] = "Add Infomation";
+}
+<div class="row justify-content-md-center">
+    <div class="col-md-5">
+        @using (Html.BeginForm("AddInfo", "User", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+ 
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">Add Infomation</div>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Name)
+                        @Html.TextBoxFor(m => m.Name, "", new { @class = "form-control", @placeholder = "Enter your name" })
+                        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "badge text-danger" })
+                       
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Sdt)
+                        @Html.TextBoxFor(m => m.Sdt, "", new { @class = "form-control", @placeholder = "Phone" })
+                        @Html.ValidationMessageFor(m => m.Sdt, "", new { @class = "badge text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.Address)
+                        @Html.PasswordFor(m => m.Address, new { @class = "form-control", @placeholder = "Address" })
+                        @Html.ValidationMessageFor(m => m.Address, "", new { @class = "badge text-danger" })
+                    </div>
+                    <input type="hidden" name="role" value="1" />
+                    <div class="form-group">
+                        <input type="submit" name="submit" class="btn btn-danger" value="Add Info"/>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

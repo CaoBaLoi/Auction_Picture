@@ -1,0 +1,29 @@
+@model List<Account>
+@{
+    ViewData["Title"] = "AccountManagement";
+}
+<h2>List of Accounts</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var account in Model)
+        {
+            <tr>
+                <td>@account.Username</td>
+                <td>@account.Email</td>
+                <td>
+                    <button type="button" class="btn btn-danger">
+                        <a href="@Url.Action("Delete", "Admin", new { id = account.ID })">Delete</a>
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
